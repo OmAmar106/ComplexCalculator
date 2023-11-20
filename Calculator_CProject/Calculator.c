@@ -25,6 +25,56 @@ float conversion(float x,int a){
         return x*3.14/180;
     }
 }
+float loga(float x){
+    float result = 0;
+    float term = x-1;
+    if(x<=1 && x>0){
+        for(int i = 1;i <= 100;i++) { 
+            result += term/(i);
+            term *= (1-x);
+        }
+        return result/2.303;
+    }
+    else if(x>1){
+        float count = 0;
+        while(x>1){
+            x/=10;
+            count += 1;
+        }
+        return loga(x)+count;
+    }
+    else{
+        return 0.0;
+    }
+}
+float logarithm(float x,float y){
+    return loga(x)/loga(y);
+}
+float exponential(float x,float y){
+    float sum = 0;
+    float term = 1;
+    if(y<1 && y>0){
+        for(int i=0;i<100;i++){
+            sum += term;
+            term *= (loga(x)*2.303*y/(i+1));
+        }
+    }
+    else if(y<0){
+        return exponential(1/x,-y);
+    }
+    else if(y==0){
+        return 1.0;
+    }
+    else{
+        int c = (int)y;
+        float g = 1;
+        for(int i=0;i<c;i++){
+            g *= x;
+        }
+        return g*exponential(x,y-c);
+    }
+    return sum;
+}
 int main(){
     printf("\n \n-------------------------Scientific Calculator----------------------------- \n \n");
     int a = 0;
@@ -66,7 +116,7 @@ int main(){
                 printf("Enter Second number : ");
                 scanf("%f",&d);
                 printf("\n%.3f + %.3f = %.3f \n",c,d,addition(c,d));
-                fprintf(fptr,"%.3f + %.3f = %.3f \n",c,d,addition(c,d));
+                fprintf(fptr,"\n%.3f + %.3f = %.3f \n",c,d,addition(c,d));
                 fprintf(fptr,"%s\n",ctime(&t));
                 printf("\n \n");
             }
@@ -77,7 +127,7 @@ int main(){
                 printf("Enter Second number : ");
                 scanf("%f",&d);
                 printf("\n%.3f - %.3f = %.3f \n",c,d,addition(c,-d));
-                fprintf(fptr,"%.3f - %.3f = %.3f \n",c,d,addition(c,-d));
+                fprintf(fptr,"\n%.3f - %.3f = %.3f \n",c,d,addition(c,-d));
                 fprintf(fptr,"%s\n",ctime(&t));
                 printf("\n \n");
             }
@@ -88,7 +138,7 @@ int main(){
                 printf("Enter Second number : ");
                 scanf("%f",&d);
                 printf("\n%.3f x %.3f = %.3f \n",c,d,multiplication(c,d));
-                fprintf(fptr,"%.3f x %.3f = %.3f \n",c,d,multiplication(c,d));
+                fprintf(fptr,"\n%.3f x %.3f = %.3f \n",c,d,multiplication(c,d));
                 fprintf(fptr,"%s\n",ctime(&t));
                 printf("\n \n");
             }
@@ -99,7 +149,7 @@ int main(){
                 printf("Enter Second number : ");
                 scanf("%f",&d);
                 printf("\n%.3f / %.3f = %.3f \n",c,d,multiplication(c,1/d));
-                fprintf(fptr,"%.3f / %.3f = %.3f \n",c,d,multiplication(c,1/d));
+                fprintf(fptr,"\n%.3f / %.3f = %.3f \n",c,d,multiplication(c,1/d));
                 fprintf(fptr,"%s\n",ctime(&t));
                 printf("\n \n");
             }
@@ -124,14 +174,25 @@ int main(){
                 printf("\n \n");
             }
             else if(b==7){
-                printf("----------------Quadratic-Equation--------------\n");
-                printf("\nEnter Degree : ");
-                scanf("%d",&e);
-                int a = 0;
-                for(int i=0;i<e+1;i++){
-                    printf("Enter coeffecient of x^%d\n",i);
-                    scanf("%f",arr[i]);
-                }
+                printf("-------------Logarithmic------------\n");
+                printf("\nEnter Number : ");
+                scanf("%f",&c);
+                printf("Enter Base Number : ");
+                scanf("%f",&d);
+                printf("\nlog %.3f %.3f = %.3f \n",d,c,logarithm(c,d));
+                fprintf(fptr,"\nlog %.3f %.3f = %.3f \n",d,c,logarithm(c,d));
+                fprintf(fptr,"%s\n",ctime(&t));
+                printf("\n \n");
+            }
+            else if(b==8){
+                printf("-------------Exponential-----------\n");
+                printf("\nEnter First number : ");
+                scanf("%f",&c);
+                printf("Enter Second number : ");
+                scanf("%f",&d);
+                printf("\n%.3f ^ %.3f = %.3f \n",c,d,exponential(c,d));
+                fprintf(fptr,"\n%.3f ^ %.3f = %.3f \n",c,d,exponential(c,d));
+                fprintf(fptr,"%s\n",ctime(&t));
                 printf("\n \n");
             }
             else if(b==9){
@@ -241,8 +302,7 @@ int main(){
                         scanf("%f",&r);
                         printf("Enter Height : ") ; 
                         scanf("%f",&h);
-                        //l =sqrt((r*r) + (h*h));
-                        //Replace the 'sqrt' with the expo function which will be added later in the program
+                        l =exponential((r*r) + (h*h),1/2);
                         printf("\nSurface Area of Cone \n((π x r x l)+(π x r x r)= %f\n\n",((3.141*r*l)+(3.141*r*r)));
                         fprintf(fptr,"\nSurface Area of Cone \n((π x r x l)+(π x r x r)= %f\n\n",((3.141*r*l)+(3.141*r*r)));
                     }
@@ -263,6 +323,27 @@ int main(){
                     printf("Wrong choice!");
                 }
                 printf("\n");
+            }
+            else if(b==10){
+                printf("----------------Quadratic-Equation--------------\n");
+                printf("\nEnter Degree : ");
+                scanf("%d",&e);
+                int a = 0;
+                for(int i=0;i<e+1;i++){
+                    printf("Enter coeffecient of x^%d : ",i);
+                    scanf("%f",&arr[i]);
+                }
+                printf("Enter Value of x : ");
+                scanf("%f",&c);
+                printf("\n");
+                float sum = 0;
+                for(int i=0;i<e+1;i++){
+                    sum += arr[i]*exponential(c,i);
+                }
+                printf("Value of f(%.3f) = %.3f \n",c,sum);
+                fprintf(fptr,"Value of f(%.3f) = %.3f \n",c,sum);
+                fprintf(fptr,"%s\n",ctime(&t));
+                printf("\n \n");
             }
             else if(b==11){
                 printf("------------------Permutation----------------\n");
@@ -296,7 +377,6 @@ int main(){
                 }
                 printf("\n \n");
             }
-            //Ashish
             else if(b==13){
                 int ch;
                 printf("----------------Volume-And-Surface-Area--------------\n");
@@ -405,8 +485,7 @@ int main(){
                         scanf("%f",&r);
                         printf("Enter Height : ") ; 
                         scanf("%f",&h);
-                        //l =sqrt((r*r) + (h*h));
-                        //Replace the 'sqrt' with the expo function which will be added later in the program
+                        l =exponential((r*r) + (h*h),0.5);
                         printf("\nSurface Area of Cone ((π x r x l)+(π x r x r)= %.3f\n",((3.141*r*l)+(3.141*r*r)));
                         fprintf(fptr,"\nSurface Area of Cone ((π x r x l)+(π x r x r)= %.3f\n",((3.141*r*l)+(3.141*r*r)));
                     }
@@ -493,6 +572,15 @@ int main(){
                 fprintf(fptr,"%s\n",ctime(&t));
                 printf("\n \n");
             }
+            else if(b==5){
+                printf("-----------Modulus(|Z|)---------\n");
+                printf("\nEnter First number(a+bi) : ");
+                scanf("%f+%fi",&c,&d);
+                printf("\nModulus of %.1f+%.1fi = %.1f \n",c,d,exponential((c*c+d*d),0.5));
+                fprintf(fptr,"\nModulus of %.1f+%.1fi = %.1f \n",c,d,exponential((c*c+d*d),0.5));
+                fprintf(fptr,"%s\n",ctime(&t));
+                printf("\n \n");
+            }
         }
         else if(a==3){
             printf("\nHistory\n\n");
@@ -508,5 +596,3 @@ int main(){
 
     }
 }
-/*one line left in quadratic equation and to make modulus using power function can also switch the one in complex division
-once they make the function for it*/
