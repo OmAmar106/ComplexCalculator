@@ -75,13 +75,54 @@ float exponential(float x,float y){
     }
     return sum;
 }
+float sini(float x){
+    float result = 0;
+    float term = x;
+    for(int i=1;i<100;i++){
+        result += term;
+        term *= (2*i-1)*x*x/(2*i*(2*i+1));
+    }
+    return result;
+}
+float tani(float x){
+    float result = 0;
+    float term = x;
+    if(x<=1 && x>=-1){
+        for(int i=1;i<100;i+=2){
+            result += term/i;
+            term *= -1*x*x;
+        }
+    }
+    else{
+        result = 1.57 - tani(1/x);
+    }
+    return result;
+}
+float cosa(float x){
+    while(x>=6.28){
+        x-=6.28;
+    }
+    while(x<0){
+        x+=6.28;
+    }
+    float sum = 1;
+    float term = 1;
+    for(int i=0;i<100;i+=2){
+        term *= x*x*(-1)/((i+1)*(i+2));
+        sum += term;
+    }
+    return sum;
+}
 int main(){
-    printf("\n \n-------------------------Scientific Calculator----------------------------- \n \n");
+    printf("\n \n-------------------------Scientific Calculator------------------------------\n \n");
     int a = 0;
+    float b = 5.4;
     while(a!=4){
         int a,b,e,f;
         float c,d,g,h,arr[10];
+        char ch;
         FILE* fptr;
+        FILE* fptr1;
         time_t t;
         time(&t);
         fptr = fopen("file.txt", "a+");
@@ -198,7 +239,7 @@ int main(){
             else if(b==9){
                 int ch;
                 printf("----------------Trignometric-Function--------------\n");
-                printf("\n1. Trignoemtric Function");
+                printf("\n1. Trignometric Function");
                 printf("\n2. Inverse Trignometric Function\n");
                 printf("\nEnter Choice : ");
                 scanf("%d",&ch);
@@ -210,51 +251,73 @@ int main(){
                     printf("\n3. tan(x)");
                     printf("\n4. sec(x)");
                     printf("\n5. cosec(x)");
-                    printf("\n6. cot(x)\n");
+                    printf("\n6. cot(x)");
+                    printf("\n7. exit\n");
                     printf("\nEnter Choice : ");
                     scanf("%d",&ch1);
+                    printf("\n");
                     if(ch1==1){
                         float s;
-                        printf("\nEnter thetha() : ");
-                        scanf("%f",&s);
-                        printf("\nVolume of %f sided Cube = %f\n\n",s,(s*s*s));
-                        fprintf(fptr,"\nVolume of %f sided Cube = %f\n\n",s,(s*s*s));
+                        printf("-----------------cos0---------------\n");
+                        printf("\nEnter Thetha(in Radians) : ");
+                        scanf("%f",&c);
+                        printf("\ncos(%.3f) = %.3f \n",c,cosa(c));
+                        fprintf(fptr,"\ncos(%.3f) = %.3f \n",c,cosa(c));
+                        fprintf(fptr,"%s\n",ctime(&t));
+                        printf("\n \n");
                     }
                     else if(ch1==2){
-                        float l,b,h;
-                        printf("\nEnter length : ");
-                        scanf("%f",&l);
-                        printf("Enter breadth : ");
-                        scanf("%f",&b);
-                        printf("Enter height : ");
-                        scanf("%f",&h);
-                        printf("\nVolume of Cuboid of dimensions (%f x %f x %f) = %f\n\n",l,b,h,(l*b*h));
-                        fprintf(fptr,"\nVolume of Cuboid of dimensions (%f x %f x %f) = %f\n\n",l,b,h,(l*b*h));
+                        float s;
+                        printf("------------------sin0-----------------\n");
+                        printf("\nEnter Thetha(in Radians) : ");
+                        scanf("%f",&c);
+                        printf("\nsin(%.3f) = %.3f \n",c,exponential(1-exponential(cosa(c),2),0.5));
+                        fprintf(fptr,"\nsin(%.3f) = %.3f \n",c,exponential(1-exponential(cosa(c),2),0.5));
+                        fprintf(fptr,"%s\n",ctime(&t));
+                        printf("\n \n");
                     }
                     else if(ch1==3){
-                        float r;
-                        printf("\nEnter Radius : ");
-                        scanf("%f",&r);
-                        printf("\nVolume of Sphere = %f\n\n",(4/3)*(3.141)*r*r*r);
-                        fprintf(fptr,"\nVolume of Sphere = %f\n\n",(4/3)*(3.141)*r*r*r);
+                        float s;
+                        printf("------------------tan0-----------------\n");
+                        printf("\nEnter Thetha(in Radians) : ");
+                        scanf("%f",&c);
+                        printf("\ntan(%.3f) = %.3f \n",c,exponential(1-exponential(cosa(c),2),0.5)/cosa(c));
+                        fprintf(fptr,"\ntan(%.3f) = %.3f \n",c,exponential(1-exponential(cosa(c),2),0.5)/cosa(c));
+                        fprintf(fptr,"%s\n",ctime(&t));
+                        printf("\n \n");
                     }
                     else if(ch1==4){
-                        float r,h;
-                        printf("\nEnter Radius : ");
-                        scanf("%f",&r);
-                        printf("Enter Height : ");
-                        scanf("%f",&h);
-                        printf("\nVolume of Cone = %f\n\n",((3.141*r*r*h)/3));
-                        fprintf(fptr,"\nVolume of Cone = %f\n\n",((3.141*r*r*h)/3));
+                        float s;
+                        printf("------------------sec0-----------------\n");
+                        printf("\nEnter Thetha(in Radians) : ");
+                        scanf("%f",&c);
+                        printf("\nsec(%.3f) = %.3f \n",c,1/cosa(c));
+                        fprintf(fptr,"\nsec(%.3f) = %.3f \n",c,1/cosa(c));
+                        fprintf(fptr,"%s\n",ctime(&t));
+                        printf("\n \n");
                     }
                     else if(ch1==5){
-                        float r,h;
-                        printf("\nEnter Radius : ");
-                        scanf("%f",&r);
-                        printf("Enter Height : ");
-                        scanf("%f",&h);
-                        printf("\nVolume of Cylinder = %f\n\n",(3.141)*r*r*h);
-                        fprintf(fptr,"\nVolume of Cylinder = %f\n\n",(3.141)*r*r*h);
+                        float s;
+                        printf("------------------cosec0-----------------\n");
+                        printf("\nEnter Thetha(in Radians) : ");
+                        scanf("%f",&c);
+                        printf("\ncosec(%.3f) = %.3f \n",c,1/(exponential(1-exponential(cosa(c),2),0.5)));
+                        fprintf(fptr,"\ncosec(%.3f) = %.3f \n",c,1/(exponential(1-exponential(cosa(c),2),0.5)));
+                        fprintf(fptr,"%s\n",ctime(&t));
+                        printf("\n \n");
+                    }
+                    else if(ch1==6){
+                        float s;
+                        printf("------------------cot0-----------------\n");
+                        printf("\nEnter Thetha(in Radians) : ");
+                        scanf("%f",&c);
+                        printf("\ncot(%.3f) = %.3f \n",c,cosa(c)/exponential(1-exponential(cosa(c),2),0.5));
+                        fprintf(fptr,"\ncot(%.3f) = %.3f \n",c,cosa(c)/exponential(1-exponential(cosa(c),2),0.5));
+                        fprintf(fptr,"%s\n",ctime(&t));
+                        printf("\n \n");
+                    }
+                    else if(ch1==7){
+                        continue;
                     }
                     else{
                         printf("\nWrong choice\n");
@@ -268,61 +331,78 @@ int main(){
                     printf("\n3. tan-1(x)");
                     printf("\n4. sec-1(x)");
                     printf("\n5. cosec-1(x)");
-                    printf("\n6. cot-1(x)\n");
+                    printf("\n6. cot-1(x)");
+                    printf("\n7. exit\n");
                     printf("\nEnter Choice : ");
-                    scanf("%d",&ch2 );
+                    scanf("%d",&ch2);
+                    printf("\n");
                     if(ch2==1){
                         float s;
-                        printf("\nEnter Side : ");
-                        scanf("%f",&s);
-                        printf("\nSurface Area of %f sided Cube = %f\n\n",s,6*(s*s));
-                        fprintf(fptr,"\nSurface Area of %f sided Cube = %f\n\n",s,6*(s*s));
+                        printf("-----------------cos-1(0)---------------\n");
+                        printf("\nEnter Vaue[-1,1] : ");
+                        scanf("%f",&c);
+                        printf("\ncos-1(%.3f) = %.3f \n",c,1.57-sini(c));
+                        fprintf(fptr,"\ncos-1(%.3f) = %.3f \n",c,1.57-sini(c));
+                        fprintf(fptr,"%s\n",ctime(&t));
+                        printf("\n \n");
                     }
                     else if(ch2==2){
-                        float l,b,h;
-                        printf("\nEnter length : ");
-                        scanf("%f",&l);
-                        printf("Enter breadth : ");
-                        scanf("%f",&b);
-                        printf("Enter height : ");
-                        scanf("%f",&h);
-                        printf("\nSurface Area of Cuboid of dimensions (%f x %f x %f) = %f\n\n",l,b,h,2*((l*b)+(b*h)+(h*l)));
-                        fprintf(fptr,"\nSurface Area of Cuboid of dimensions (%f x %f x %f) = %f\n\n",l,b,h,2*((l*b)+(b*h)+(h*l)));
+                        float s;
+                        printf("------------------sin-1(0)-----------------\n");
+                        printf("\nEnter Value[-1,1] : ");
+                        scanf("%f",&c);
+                        printf("\nsin-1(%.3f) = %.3f \n",c,sini(c));
+                        fprintf(fptr,"\nsin-1(%.3f) = %.3f \n",c,sini(c));
+                        fprintf(fptr,"%s\n",ctime(&t));
+                        printf("\n \n");
                     }
                     else if(ch2==3){
-                        float r;
-                        printf("\nEnter Radius : ");
-                        scanf("%f",&r);
-                        printf("\nSurface Area of Sphere = %f\n\n",(4)*(3.141)*r*r);
-                        fprintf(fptr,"\nSurface Area of Sphere = %f\n\n",(4)*(3.141)*r*r);
+                        float s;
+                        printf("------------------tan-1(0)-----------------\n");
+                        printf("\nEnter Value : ");
+                        scanf("%f",&c);
+                        printf("\ntan-1(%.3f) = %.3f \n",c,tani(c));
+                        fprintf(fptr,"\ntan-1(%.3f) = %.3f \n",c,tani(c));
+                        fprintf(fptr,"%s\n",ctime(&t));
+                        printf("\n \n");
                     }
                     else if(ch2==4){
-                        float r, h, l;
-                        printf("\nEnter Radius : ");
-                        scanf("%f",&r);
-                        printf("Enter Height : ") ; 
-                        scanf("%f",&h);
-                        l =exponential((r*r) + (h*h),1/2);
-                        printf("\nSurface Area of Cone \n((π x r x l)+(π x r x r)= %f\n\n",((3.141*r*l)+(3.141*r*r)));
-                        fprintf(fptr,"\nSurface Area of Cone \n((π x r x l)+(π x r x r)= %f\n\n",((3.141*r*l)+(3.141*r*r)));
+                        float s;
+                        printf("------------------sec-1(0)-----------------\n");
+                        printf("\nEnter Value : ");
+                        scanf("%f",&c);
+                        printf("\nsec-1(%.3f) = %.3f \n",c,1/(1.57-sini(1/c)));
+                        fprintf(fptr,"\nsec-1(%.3f) = %.3f \n",c,1/(1.57-sini(1/c)));
+                        fprintf(fptr,"%s\n",ctime(&t));
+                        printf("\n \n");
                     }
                     else if(ch2==5){
-                        float r,h;
-                        printf("\nEnter Radius : ");
-                        scanf("%f",&r);
-                        printf("Enter Height : ");
-                        scanf("%f",&h);
-                        printf("\nSurface Area of Cylinder = %f\n\n",(3.141)*r*r*2 + (3.141)*r*h*2);
-                        fprintf(fptr,"\nSurface Area of Cylinder = %f\n\n",(3.141)*r*r*2 + (3.141)*r*h*2);
-                    } 
+                        float s;
+                        printf("------------------cosec-1(0)-----------------\n");
+                        printf("\nEnter Value : ");
+                        scanf("%f",&c);
+                        printf("\ncosec-1(%.3f) = %.3f \n",c,sini(1/c));
+                        fprintf(fptr,"\ncosec-1(%.3f) = %.3f \n",c,sini(1/c));
+                        fprintf(fptr,"%s\n",ctime(&t));
+                        printf("\n \n");
+                    }
+                    else if(ch2==6){
+                        float s;
+                        printf("------------------cot-1(0)-----------------\n");
+                        printf("\nEnter Value : ");
+                        scanf("%f",&c);
+                        printf("\ncot-1(%.3f) = %.3f \n",c,1.57-tani(c));
+                        fprintf(fptr,"\ncot-1(%.3f) = %.3f \n",c,1.57-tani(c));
+                        fprintf(fptr,"%s\n",ctime(&t));
+                        printf("\n \n");
+                    }
+                    else if(ch2==7){
+                        continue;
+                    }
                     else{
-                        printf("\nWrong choivce!\n");
+                        printf("\nWrong choice\n");
                     }
                 }
-                else{
-                    printf("Wrong choice!");
-                }
-                printf("\n");
             }
             else if(b==10){
                 printf("----------------Quadratic-Equation--------------\n");
@@ -416,8 +496,8 @@ int main(){
                         float r;
                         printf("\nEnter Radius : ");
                         scanf("%f",&r);
-                        printf("\nVolume of Sphere = %.3f\n",(4/3)*(3.141)*r*r*r);
-                        fprintf(fptr,"\nVolume of Sphere = %.3f\n",(4/3)*(3.141)*r*r*r);
+                        printf("\nVolume of Sphere = %.3f\n",4*(3.141)*r*r*r/3);
+                        fprintf(fptr,"\nVolume of Sphere = %.3f\n",4*(3.141)*r*r*r/3);
                     }
                     else if(ch1==4){
                         float r,h;
@@ -526,8 +606,8 @@ int main(){
             printf("6. Argument \n");
             printf("7. Go Back \n");
             printf("\nEnter Choice : ");
-            printf("\n");
             scanf("%d",&b);
+            printf("\n");
             if(b==1){
                 printf("-----------Complex-Addition---------\n");
                 printf("\nEnter First number(a+bi) : ");
@@ -574,16 +654,31 @@ int main(){
             }
             else if(b==5){
                 printf("-----------Modulus(|Z|)---------\n");
-                printf("\nEnter First number(a+bi) : ");
+                printf("\nEnter Complex number(a+bi) : ");
                 scanf("%f+%fi",&c,&d);
                 printf("\nModulus of %.1f+%.1fi = %.1f \n",c,d,exponential((c*c+d*d),0.5));
                 fprintf(fptr,"\nModulus of %.1f+%.1fi = %.1f \n",c,d,exponential((c*c+d*d),0.5));
                 fprintf(fptr,"%s\n",ctime(&t));
                 printf("\n \n");
             }
+            else if(b==6){
+                printf("-----------Argument---------\n");
+                printf("\nEnter Complex number(a+bi) : ");
+                scanf("%f+%fi",&c,&d);
+                printf("\nArgument of %.1f+%.1fi = %.3f \n",c,d,tani(d/c));
+                fprintf(fptr,"\nArgument of %.1f+%.1fi = %.3f \n",c,d,tani(d/c));
+                fprintf(fptr,"%s\n",ctime(&t));
+                printf("\n \n");
+            }
         }
         else if(a==3){
             printf("\nHistory\n\n");
+            fptr1 = fopen("file.txt","r");
+            while(ch!=EOF){
+                ch = fgetc(fptr1);
+                printf("%c", ch);
+            }
+            printf("\n");
         }
         else if(a==4){
             printf("\n-------------------------------Thank You-----------------------------------\n\n");
@@ -593,6 +688,5 @@ int main(){
             printf("\nNot a valid choice , Enter Again \n \n");
         }
         fclose(fptr);
-
     }
 }
