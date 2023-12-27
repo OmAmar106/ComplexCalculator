@@ -1,4 +1,4 @@
-------------------------------SCIENTIFIC-CALCULATOR-----------------------------------
+------------------------------------------------SCIENTIFIC-CALCULATOR-------------------------------------------------
 
 
 * This calculator is a menu based program dealing with real , complex numbers.
