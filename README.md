@@ -1,5 +1,4 @@
-------------------------------------------------SCIENTIFIC-CALCULATOR-------------------------------------------------
-
+# SCIENTIFIC-CALCULATOR
 This calculator is a menu based program dealing with real and complex numbers. It has been made only using C.
 
 It stores the History in a text file based database and can be printed withing the program along the time that the operation was done.
