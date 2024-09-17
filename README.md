@@ -1,34 +1,63 @@
-# SCIENTIFIC-CALCULATOR
-This calculator is a menu based program dealing with real and complex numbers. It has been made only using C.
+# Scientific Calculator
 
-It stores the History in a text file based database and can be printed withing the program along the time that the operation was done.
+This is a menu-based scientific calculator program written in C, designed to handle both real and complex numbers. It includes a wide range of operations and maintains a history of calculations in a text file, which includes timestamps for each operation.
 
-It's main benefit is the huge number of operations that you can perform and different datatypes that you can deal with
+## Features
 
-Functions that have been used in the project:
+- **Extensive Operations**: Perform a variety of calculations including factorials, logarithms, exponentials, and trigonometric functions.
+- **History Tracking**: Operations and results are stored in a text file with execution timestamps for later review.
+- **Real and Complex Number Support**: Conduct calculations involving real numbers, complex numbers, and their combinations.
 
-Factorial : if the input value is 1 or 0 , it returns 1 whereas if its a big number , the final value is printed using recursion
+## Key Functions
 
-loga : Using taylor series,the value of log has been calculated for number greater than and less than 1. for greter than 1 , same formula is used but it is first divided by 10 until it reaches a number less than 1 and the number of time it is divided is added to the final value of the logarithm.
+### Factorial
+- Calculates the factorial of a number using recursion.
+- Efficiently handles both small (e.g., 0 or 1) and large values.
 
-logarithm : this is just so that the base can be custom made rather than it being default 10.
+### Logarithm (`loga`)
+- Computes the logarithm using Taylor series.
+- For numbers greater than 1, the value is divided by 10 iteratively until it's less than 1, and the count of divisions is added to the result.
+- Supports custom bases for logarithms.
 
-exponential : for y belonging to 0 to 1 , taylor series has been used, whereas for others, the number has first been substracted by the integer smaller than the number and closest to it and then the old formula is used along with adding our number raised to the integer closest to it.
+### Exponential
+- Uses Taylor series to compute the exponential function for values between 0 and 1.
+- For values outside this range, the number is decomposed into an integer part and a fractional part, applying the formula accordingly.
 
-sini : this function uses taylor series to calculate the sin inverse of a float number.
+### Trigonometric Functions
+- **Sine Inverse (`sini`)**: Computes the inverse sine using Taylor series.
+- **Tangent Inverse (`tani`)**: Calculates the inverse tangent using Taylor series.
+- **Cosine (`cosa`)**: Determines the cosine by reducing the angle modulo \(2\pi\) and then applying Taylor series.
 
-tani : using taylor series , we calculate the tan inverse of a float number.
+## Main Menu
 
-cosa : first we substract 2pie from the input number as many times as possible then we use taylor series and find the value of cos thetha.
+The main menu offers options to perform operations with real numbers, complex numbers, access history, or exit the program. The menu includes:
 
-This is followed by the main function which has all the menus and the submenus it first gives you the option of real numbers , complex numbers , history,exit.
+- **Real Numbers**: Perform operations like addition, subtraction, multiplication, division, and more.
+- **Complex Numbers**: Handle calculations with complex numbers in the form `a+bi`, including addition, subtraction, and other operations.
+- **History**: View a log of past operations along with timestamps.
+- **Exit**: Close the calculator.
 
-There are many subparts in real numbers and complex numbers which calls the required function from the functions stated above.
+## Quadratic Equations
 
-The program has been optimized to make use of as less of function as possible for example rather than creating a substraction function , we have used the addition function directly with variables as a,-b.
+- **Quadratic Submenu**: Solves quadratic equations by accepting powers of \(x\) and providing the result for different values of \(x\). Utilizes arrays for efficient computation.
 
-There is a quadratic submenu , which asks for powers of x as input and returns the value after putting in the value of x as output.This has been done using arrays.
+## Volume and Surface Area
 
-Volume and Surface Area is a big submenu with many options for surface area and volume of different shapes.
+- **Volume and Surface Area Submenu**: Provides options to calculate the volume and surface area for various geometric shapes.
 
-In complex operations , we take a and b as input in the form a+bi. Then the operations are used separately for both a and b taken as input , after that normal addition and substraction are used.
+## Usage
+
+1. Compile the program using a C compiler.
+2. Run the executable to access the main menu.
+3. Navigate through the menus to perform desired operations.
+
+## Example
+
+To calculate the factorial of 5:
+
+1. Select the "Real Numbers" menu.
+2. Choose the "Factorial" option.
+3. Enter the number 5.
+
+The result will be displayed, and the operation will be saved to the history file.
+
